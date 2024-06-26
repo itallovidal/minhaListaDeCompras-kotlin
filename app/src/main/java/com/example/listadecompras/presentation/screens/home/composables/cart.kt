@@ -15,7 +15,9 @@ import com.example.listadecompras.presentation.screens.home.viewModels.ProductsV
 
 @Composable
 fun Cart(productsViewModel: ProductsViewModel, modifier: Modifier = Modifier){
-    val products by  productsViewModel.products.observeAsState(initial = emptyList())
+    val products by productsViewModel.products.observeAsState(initial = emptyList())
+
+    Log.e("mylog", productsViewModel.showCart().toString())
     Log.e("agora", products.toString())
 
     LazyColumn(

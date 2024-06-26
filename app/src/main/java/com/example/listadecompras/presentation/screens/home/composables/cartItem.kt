@@ -1,5 +1,6 @@
 package com.example.listadecompras.presentation.screens.home.composables
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,6 +18,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,9 +41,10 @@ import com.example.listadecompras.presentation.screens.home.viewModels.ProductsV
 @Composable
 fun CartItem(product: Product, productsViewModel: ProductsViewModel, modifier: Modifier = Modifier){
     val trash = ImageVector.vectorResource(id = R.drawable.trashicon)
-    var quantity by remember { mutableStateOf(TextFieldValue(product.quantity.toString())) }
     var price by remember { mutableStateOf(TextFieldValue(product.price.toString())) }
+    var quantity by remember { mutableStateOf(TextFieldValue(product.quantity.toString())) }
     val maxInputLength = 4
+
 
     Row(
         modifier
@@ -62,7 +66,10 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel, modifier: M
         TextField(
             value = price,
             onValueChange = {
-                if (it.text.length <= maxInputLength) price = it
+                if (it.text.length <= maxInputLength) {
+                    price = it
+                    productsViewModel.changeItemPrice(product.id, it.text)
+                }
             },
 
             modifier
@@ -78,7 +85,10 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel, modifier: M
         TextField(
             value = quantity,
             onValueChange = {
-                if (it.text.length <= maxInputLength) quantity = it
+                if (it.text.length <= maxInputLength) {
+                    quantity = it
+                    productsViewModel.changeItemQuantity(product.id, it.text)
+                }
             },
             modifier
                 .clip(shape = RoundedCornerShape(5.dp))

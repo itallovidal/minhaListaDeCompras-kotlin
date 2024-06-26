@@ -3,10 +3,21 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.listadecompras.domain.models.Product
+import android.util.Log
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.lifecycle.MediatorLiveData
+
 
 class ProductsViewModel: ViewModel() {
     private val _products = MutableLiveData<List<Product>>(emptyList())
     val products: LiveData<List<Product>> = _products
+
+
+    private val _total = MutableLiveData( getTotalValue())
+    val total: LiveData<Double> = _total
+
 
     fun addItemToCart(item: String){
         val actualProductList = _products.value?.toMutableList()
@@ -21,9 +32,11 @@ class ProductsViewModel: ViewModel() {
     fun removeItemFromCart(id: Int){
         val filteredProducts = _products.value?.filter { product -> product.id != id  }
         _products.value = filteredProducts
+
+        _total.value = getTotalValue()
     }
 
-    fun getTotalValue(): Double{
+    private fun getTotalValue(): Double{
         if(_products.value?.isEmpty() == true ||_products.value == null ){
             return 0.00
         }
@@ -31,6 +44,50 @@ class ProductsViewModel: ViewModel() {
         return _products.value!!.fold(0.0) { acc, product ->
             acc + (product.price * product.quantity)
         }
+    }
+
+    fun changeItemPrice(id: Int, price: String){
+        Log.e("mylog", price)
+
+        if(price.isEmpty()) return
+
+        val newPrice = price.toDouble()
+
+        val updatedProducts = _products.value?.map {
+            if(it.id == id){
+                Log.e("mylog", "Novo Preço:")
+                Log.e("mylog", newPrice.toString())
+                return@map it.copy(price = newPrice)
+            }
+
+            return@map it
+        }
+        _products.value = updatedProducts
+
+        _total.value = getTotalValue()
+    }
+
+    fun changeItemQuantity(id: Int, quantity: String){
+        Log.e("mylog", quantity)
+
+        if(quantity.isEmpty()) return
+
+        val newQuantity = quantity.toInt()
+        val updatedProducts = _products.value?.map { product ->
+            if(product.id == id) {
+                return@map product.copy(quantity = newQuantity)
+            }
+
+            return@map product
+        }
+
+        _products.value = updatedProducts
+
+        _total.value = getTotalValue()
+    }
+
+    fun showCart(): List<Product>?{
+        return products.value
     }
 }
 

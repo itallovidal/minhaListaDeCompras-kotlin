@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
             ListaDeComprasTheme {
                 val colorTwo = ContextCompat.getColor(this@MainActivity, R.color.neutralTwo)
                 Surface( color = Color(colorTwo), modifier = Modifier.fillMaxHeight() ) {
-                    Home(productsViewModel = ProductsViewModel() ,this@MainActivity)
+                    Home(productsViewModel = ProductsViewModel())
                 }
             }
         }

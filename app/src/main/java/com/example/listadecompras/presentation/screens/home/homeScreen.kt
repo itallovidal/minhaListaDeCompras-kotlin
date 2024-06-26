@@ -46,9 +46,9 @@ import com.example.listadecompras.presentation.screens.home.composables.Header
 import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
 
 @Composable
-fun Home(productsViewModel: ProductsViewModel, activity: MainActivity){
+fun Home(productsViewModel: ProductsViewModel){
     Column {
-        Header(productsViewModel, activity, modifier = Modifier)
+        Header(productsViewModel, modifier = Modifier)
         Cart(productsViewModel)
     }
 }
