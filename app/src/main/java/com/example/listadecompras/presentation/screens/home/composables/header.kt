@@ -18,8 +18,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.listadecompras.Logo
 import com.example.listadecompras.MainActivity
+import com.example.listadecompras.presentation.Logo
 import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
 
 @Composable

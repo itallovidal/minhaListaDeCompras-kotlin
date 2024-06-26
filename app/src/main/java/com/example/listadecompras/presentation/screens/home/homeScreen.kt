@@ -37,7 +37,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.example.listadecompras.Logo
 import com.example.listadecompras.MainActivity
 import com.example.listadecompras.domain.models.Product
 import com.example.listadecompras.R
