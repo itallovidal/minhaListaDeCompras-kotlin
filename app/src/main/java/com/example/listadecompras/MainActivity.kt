@@ -49,6 +49,7 @@ class MainActivity : ComponentActivity() {
                 val productsViewModel = ProductsViewModel()
                 val navController = rememberNavController()
                 val colorTwo = ContextCompat.getColor(this@MainActivity, R.color.neutralTwo)
+
                 Surface( color = Color(colorTwo), modifier = Modifier.fillMaxHeight() ) {
                     Column {
                         NavHost(navController = navController, startDestination = "home", Modifier.weight(1f) ){
@@ -56,7 +57,7 @@ class MainActivity : ComponentActivity() {
                                 Home(productsViewModel)
                             }
                             composable("importList"){
-                                ImportListScreen()
+                                ImportListScreen(productsViewModel, navController)
                             }
                         }
                         BottomAppBar(actions = {
@@ -64,7 +65,7 @@ class MainActivity : ComponentActivity() {
                                 label = {
                                         Text(text="Home")
                                 },
-                                selected = selectedScreen === "home",
+                                selected = selectedScreen == "home",
                                 onClick = {
                                     navController.navigate("home")
                                     selectedScreen = "home"
@@ -76,7 +77,7 @@ class MainActivity : ComponentActivity() {
                                 label = {
                                     Text(text="Importar Lista")
                                 },
-                                selected = selectedScreen === "importList",
+                                selected = selectedScreen == "importList",
                                 onClick = {
                                     navController.navigate("importList")
                                     selectedScreen = "importList"

@@ -4,10 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.listadecompras.domain.models.Product
 import android.util.Log
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.lifecycle.MediatorLiveData
 
 
 class ProductsViewModel: ViewModel() {
@@ -15,11 +11,13 @@ class ProductsViewModel: ViewModel() {
     val products: LiveData<List<Product>> = _products
 
 
-    private val _total = MutableLiveData( getTotalValue())
+    private val _total = MutableLiveData(getTotalValue())
     val total: LiveData<Double> = _total
 
 
     fun addItemToCart(item: String){
+        if(item.length < 3) return
+
         val actualProductList = _products.value?.toMutableList()
         var newProduct = Product(name = item, price = 0.0, quantity = 1, id = 1)
         if(actualProductList !== null && actualProductList.isNotEmpty()){
@@ -88,6 +86,53 @@ class ProductsViewModel: ViewModel() {
 
     fun showCart(): List<Product>?{
         return products.value
+    }
+
+    fun importNewList(inputText: String){
+        if (inputText.length < 3) return
+
+        val splittedText = inputText.split('\n').filter { it.isNotEmpty() }
+        val filteredList = splittedText.map { it.trimEnd() }.map { it.trimStart() }
+
+        var quantity = 0
+        Log.e("log2", "->")
+        Log.e("log2", filteredList.toString())
+
+
+        val regexPickStrings =  Regex("[a-zA-Z ]")
+        val regexPickAllNumbers = Regex("\\d")
+
+        val newList = filteredList.mapIndexed { index, it ->
+            val strings = regexPickStrings.findAll(it)
+                .map { it.value }
+                .joinToString("").trimStart()
+
+            Log.e("log2", regexPickAllNumbers.containsMatchIn(it).toString() )
+
+            if(regexPickAllNumbers.containsMatchIn(it)){
+                quantity = regexPickAllNumbers.findAll(it)
+                    .map { it.value }
+                    .joinToString("").toInt()
+            }
+
+            Log.e("log2", "->")
+            Log.e("log2", strings)
+
+            Log.e("log2", "->")
+            Log.e("log2", quantity.toString())
+
+            return@mapIndexed Product(
+                strings,
+                quantity = quantity ?: 0,
+                id = index,
+                price = 0.0
+            )
+        }
+
+
+        Log.e("mylog", newList.toString())
+        _products.value = newList
+        _total.value = 0.0
     }
 }
 

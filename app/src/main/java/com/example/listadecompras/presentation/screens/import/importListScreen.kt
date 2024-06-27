@@ -28,11 +28,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.listadecompras.presentation.Logo
+import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
 
 
 @Composable
-fun ImportListScreen(){
+fun ImportListScreen(productsViewModel: ProductsViewModel, navController: NavController){
     val gradient = Brush.linearGradient(
         0.0f to Color(0xFF323238),
         500.0f to Color(0xFF121214),
@@ -47,13 +49,13 @@ fun ImportListScreen(){
             horizontalAlignment = Alignment.CenterHorizontally){
 
        Logo(Modifier.padding(top = 32.dp))
-        ImportListComponent()
+        ImportListComponent(productsViewModel, navController)
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ImportListComponent() {
+fun ImportListComponent(productsViewModel: ProductsViewModel, navController: NavController) {
     var listToImport by remember {
         mutableStateOf("")
     }
@@ -74,9 +76,6 @@ fun ImportListComponent() {
                 .weight(1f),
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = Color(0xFF4F4F52), // Cor de fundo padrão
-//                focusedIndicatorColor = Color.Transparent, // Cor do indicador quando focado
-//                unfocusedIndicatorColor = Color.Transparent, // Cor do indicador quando não está focado
-//                disabledIndicatorColor = Color.Transparent // Cor do indicador quando desativado
             ),
         )
         Box(
@@ -84,14 +83,14 @@ fun ImportListComponent() {
             contentAlignment = Alignment.Center){
             Button(
                 modifier = Modifier.padding(24.dp),
-                onClick = { /*TODO*/ },
+                onClick = {
+                    productsViewModel.importNewList(listToImport)
+                    navController.navigate("home")
+                },
                 shape = RoundedCornerShape(8),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF379DF1),
-
+                        containerColor = Color(0xFF379DF1),
                     )
-
-
             ) {
                 Text(text = "Importar lista",)
             }
@@ -99,13 +98,3 @@ fun ImportListComponent() {
 
     }
 }
-
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewImportListComponent() {
-    Surface() {
-        ImportListComponent()
-    }
-}
-
