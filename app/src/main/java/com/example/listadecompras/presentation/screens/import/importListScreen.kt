@@ -69,13 +69,15 @@ fun ImportListComponent(productsViewModel: ProductsViewModel, navController: Nav
             onValueChange = {
              listToImport = it
             },
-            placeholder = { Text(text = "arroz, feijão, batata..", color = Color.White) },
+            placeholder = { Text(text = "1 arroz \n" +
+                                        "feijão \n" +
+                                        "2 batatas", color = Color.Gray) },
             textStyle = TextStyle(color = Color.White, ),
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
             colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color(0xFF4F4F52), // Cor de fundo padrão
+                containerColor = Color(0xFF4F4F52),
             ),
         )
         Box(

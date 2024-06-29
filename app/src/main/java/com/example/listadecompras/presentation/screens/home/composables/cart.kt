@@ -17,15 +17,12 @@ import com.example.listadecompras.presentation.screens.home.viewModels.ProductsV
 fun Cart(productsViewModel: ProductsViewModel, modifier: Modifier = Modifier){
     val products by productsViewModel.products.observeAsState(initial = emptyList())
 
-    Log.e("mylog", productsViewModel.showCart().toString())
-    Log.e("agora", products.toString())
-
     LazyColumn(
         modifier
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        items(products){ product : Product ->
+        items(products, key = { product -> product.id }) { product ->
             CartItem(product, productsViewModel)
         }
     }
