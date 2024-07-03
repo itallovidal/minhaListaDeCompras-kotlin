@@ -38,7 +38,7 @@ class HistoryViewModel: ViewModel(){
         launch {
             try{
                 // SUBSTITUIR AQUELE UUID ALI PELO UUID NOVO
-                val response = this@HistoryViewModel.httpClient.get("http://10.0.2.2:3333/list/26f4587e-4ed4-42f9-9146-90397ecc8fc2").body<HistoryResponse>()
+                val response = this@HistoryViewModel.httpClient.get("http://10.0.2.2:3333/list/COLAAQUIÓ").body<HistoryResponse>()
                 _history.value = response.history
             }catch (error: Exception){
                 Log.e("log3", error.message.toString())
