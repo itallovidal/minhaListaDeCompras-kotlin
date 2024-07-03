@@ -28,12 +28,12 @@ import com.example.listadecompras.presentation.screens.home.viewModels.ProductsV
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddItemInput(productsViewModel: ProductsViewModel, modifier: Modifier){
+fun AddItemInput(productsViewModel: ProductsViewModel){
     var item by remember { mutableStateOf(TextFieldValue("")) }
     val plus = ImageVector.vectorResource(id = R.drawable.plus)
 
     Row(
-        modifier
+        Modifier
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(10.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -43,7 +43,7 @@ fun AddItemInput(productsViewModel: ProductsViewModel, modifier: Modifier){
             onValueChange = {
                 item = it
             },
-            modifier
+            Modifier
                 .weight(1.0f)
             ,
             colors = TextFieldDefaults.textFieldColors(

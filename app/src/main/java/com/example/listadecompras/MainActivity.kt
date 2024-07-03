@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
@@ -27,10 +28,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.listadecompras.presentation.screens.history.HistoryScreen
+import com.example.listadecompras.presentation.screens.history.HistoryViewModel
 import com.example.listadecompras.presentation.screens.home.Home
 import com.example.listadecompras.presentation.ui.theme.ListaDeComprasTheme
 import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
@@ -48,6 +50,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 val productsViewModel = ProductsViewModel()
+                val historyViewModel = HistoryViewModel()
                 val navController = rememberNavController()
                 val colorTwo = ContextCompat.getColor(this@MainActivity, R.color.neutralTwo)
 
@@ -59,6 +62,9 @@ class MainActivity : ComponentActivity() {
                             }
                             composable("importList"){
                                 ImportListScreen(productsViewModel, navController)
+                            }
+                            composable("history"){
+                                HistoryScreen(historyViewModel)
                             }
                         }
                         BottomAppBar(actions = {
@@ -85,6 +91,18 @@ class MainActivity : ComponentActivity() {
                                  },
                                 icon = {
                                     Icon(Icons.Filled.Add, contentDescription = null)
+                                })
+                            NavigationBarItem(
+                                label = {
+                                    Text(text="Histórico")
+                                },
+                                selected = selectedScreen == "history",
+                                onClick = {
+                                    navController.navigate("history")
+                                    selectedScreen = "history"
+                                },
+                                icon = {
+                                    Icon(Icons.Filled.List, contentDescription = null)
                                 })
                         })
                     }

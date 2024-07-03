@@ -11,12 +11,12 @@ import androidx.compose.ui.unit.dp
 import com.example.listadecompras.R
 
 @Composable
-fun Logo(modifier: Modifier = Modifier){
+fun Logo(){
     val logo = painterResource(R.drawable.logolistadecompras)
 
     Image(
-        modifier = modifier
-            .height(80.dp)
+        modifier = Modifier
+            .height(72.dp)
             .padding(12.dp),
         contentScale = ContentScale.FillHeight,
         painter = logo,

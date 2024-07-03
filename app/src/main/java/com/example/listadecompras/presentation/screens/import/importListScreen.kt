@@ -48,7 +48,7 @@ fun ImportListScreen(productsViewModel: ProductsViewModel, navController: NavCon
         .background(gradient),
             horizontalAlignment = Alignment.CenterHorizontally){
 
-       Logo(Modifier.padding(top = 32.dp))
+       Logo()
         ImportListComponent(productsViewModel, navController)
     }
 }

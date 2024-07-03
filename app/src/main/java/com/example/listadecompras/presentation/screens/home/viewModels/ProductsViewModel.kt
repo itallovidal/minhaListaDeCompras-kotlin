@@ -4,15 +4,85 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.listadecompras.domain.models.Product
 import android.util.Log
+import com.example.listadecompras.domain.models.ProductList
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.engine.android.Android
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.get
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
+import io.ktor.client.utils.EmptyContent.contentType
+import io.ktor.http.ContentType.Application.Json
+import io.ktor.http.HttpHeaders.ContentType
+import io.ktor.http.contentType
+import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.Json
 
 
 class ProductsViewModel: ViewModel() {
+    private val httpClient: HttpClient = HttpClient(Android) {
+        install(Logging) {
+            level = LogLevel.ALL
+        }
+        install(ContentNegotiation) {
+            json(Json {
+                ignoreUnknownKeys = true
+            })
+        }
+    }
     private val _products = MutableLiveData<List<Product>>(emptyList())
     val products: LiveData<List<Product>> = _products
 
-
     private val _total = MutableLiveData(getTotalValue())
     val total: LiveData<Double> = _total
+
+
+
+    suspend fun getAllHistory() = coroutineScope{
+        Log.e("log3", "clicado 2")
+        launch {
+//            val response = this@ProductsViewModel.httpClient.get("https://api.adviceslip.com/advice").bodyAsText()
+            try{
+                val response = this@ProductsViewModel.httpClient.get("http://10.0.2.2:3333/list/26f4587e-4ed4-42f9-9146-90397ecc8fc1").bodyAsText()
+                Log.e("log3", response)
+            }catch (Error: Exception){
+                Log.e("log3", Error.message.toString())
+            }
+        }
+    }
+
+    suspend fun sendListToApi() = coroutineScope {
+        if(_products.value != null && _products.value!!.isEmpty()) {
+            this.cancel()
+        }
+
+        launch {
+            val newList = ProductList(_products.value)
+            try{
+                Log.e("log3", newList.toString())
+                val response = httpClient.post("http://10.0.2.2:3333/list") {
+                    contentType(io.ktor.http.ContentType.Application.Json)
+                    setBody(newList)
+                }
+
+                _products.value = emptyList()
+                _total.value = getTotalValue()
+                Log.e("log3", response.bodyAsText())
+            }catch (Error: Exception){
+                Log.e("log3", Error.message.toString())
+            }
+
+
+        }
+    }
 
 
     fun addItemToCart(item: String){

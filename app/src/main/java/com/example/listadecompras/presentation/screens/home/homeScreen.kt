@@ -41,13 +41,15 @@ import com.example.listadecompras.MainActivity
 import com.example.listadecompras.domain.models.Product
 import com.example.listadecompras.R
 import com.example.listadecompras.presentation.screens.home.composables.Cart
+import com.example.listadecompras.presentation.screens.home.composables.FinishListButton
 import com.example.listadecompras.presentation.screens.home.composables.Header
 import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
 
 @Composable
 fun Home(productsViewModel: ProductsViewModel){
     Column {
-        Header(productsViewModel, modifier = Modifier)
+        Header(productsViewModel)
         Cart(productsViewModel)
+
     }
 }
