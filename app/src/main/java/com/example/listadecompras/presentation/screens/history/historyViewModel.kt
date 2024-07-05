@@ -45,9 +45,9 @@ class HistoryViewModel: ViewModel(){
         }
     }
 
-    init {
-        runBlocking {
-            this@HistoryViewModel.getAllHistory()
-        }
-    }
+//    init {
+//        runBlocking {
+//            this@HistoryViewModel.getAllHistory()
+//        }
+//    }
 }

@@ -4,7 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.listadecompras.domain.models.Product
 import android.util.Log
+import androidx.lifecycle.viewModelScope
+import com.example.listadecompras.MainApplication
 import com.example.listadecompras.domain.models.ProductList
+import com.example.listadecompras.domain.room.User
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android
@@ -20,14 +23,46 @@ import io.ktor.http.ContentType.Application.Json
 import io.ktor.http.HttpHeaders.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
+import java.util.UUID
 
 
 class ProductsViewModel: ViewModel() {
+    private val db = MainApplication.userDatabase.userDao()
+
+    init {
+        viewModelScope.launch (Dispatchers.IO){
+            try {
+                val users = db.getAll()
+                Log.e("tag1", users.value.toString())
+
+                val count = db.getAll()
+                Log.e("tag1", count.value.toString())
+
+                if(users.value == null){
+                    Log.e("tag1", "Lista vazia!")
+                    db.insert(User(UUID.randomUUID()))
+                    Log.e("tag1", "adicionado!")
+
+                    val count = db.getAll()
+                    Log.e("tag1", count.value.toString())
+
+                    Log.e("tag1", "aaa!")
+                }
+
+            }catch (e: Exception){
+                Log.e("tag1", "erro!")
+                Log.e("tag1", e.message.toString())
+            }
+        }
+    }
+
+
     private val httpClient: HttpClient = HttpClient(Android) {
         install(Logging) {
             level = LogLevel.ALL
