@@ -4,10 +4,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.listadecompras.domain.models.Product
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.listadecompras.MainApplication
 import com.example.listadecompras.domain.models.ProductList
 import com.example.listadecompras.domain.room.User
+import com.example.listadecompras.viewmodels.AppDatabase
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android
@@ -32,36 +38,7 @@ import kotlinx.serialization.json.Json
 import java.util.UUID
 
 
-class ProductsViewModel: ViewModel() {
-    private val db = MainApplication.userDatabase.userDao()
-
-    init {
-        viewModelScope.launch (Dispatchers.IO){
-            try {
-                val users = db.getAll()
-                Log.e("tag1", users.value.toString())
-
-                val count = db.getAll()
-                Log.e("tag1", count.value.toString())
-
-                if(users.value == null){
-                    Log.e("tag1", "Lista vazia!")
-                    db.insert(User(UUID.randomUUID()))
-                    Log.e("tag1", "adicionado!")
-
-                    val count = db.getAll()
-                    Log.e("tag1", count.value.toString())
-
-                    Log.e("tag1", "aaa!")
-                }
-
-            }catch (e: Exception){
-                Log.e("tag1", "erro!")
-                Log.e("tag1", e.message.toString())
-            }
-        }
-    }
-
+class ProductsViewModel(): ViewModel() {
 
     private val httpClient: HttpClient = HttpClient(Android) {
         install(Logging) {
@@ -94,13 +71,13 @@ class ProductsViewModel: ViewModel() {
         }
     }
 
-    suspend fun sendListToApi() = coroutineScope {
+    suspend fun sendListToApi(phoneID: UUID) = coroutineScope {
         if(_products.value != null && _products.value!!.isEmpty()) {
             this.cancel()
         }
 
         launch {
-            val newList = ProductList(_products.value)
+            val newList = ProductList(_products.value, phoneID.toString())
             try{
                 Log.e("log3", newList.toString())
                 val response = httpClient.post("http://10.0.2.2:3333/list") {
@@ -122,7 +99,6 @@ class ProductsViewModel: ViewModel() {
 
     fun addItemToCart(item: String){
         if(item.length < 3) return
-
         val actualProductList = _products.value?.toMutableList()
         var newProduct = Product(name = item, price = 0.0, quantity = 1, id = 1)
         if(actualProductList !== null && actualProductList.isNotEmpty()){
@@ -189,9 +165,6 @@ class ProductsViewModel: ViewModel() {
         _total.value = getTotalValue()
     }
 
-    fun showCart(): List<Product>?{
-        return products.value
-    }
 
     fun importNewList(inputText: String){
         if (inputText.length < 3) return

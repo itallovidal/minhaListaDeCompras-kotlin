@@ -24,9 +24,10 @@ import androidx.compose.ui.unit.dp
 import com.example.listadecompras.MainActivity
 import com.example.listadecompras.presentation.Logo
 import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
+import com.example.listadecompras.viewmodels.AppDatabase
 
 @Composable
-fun Header(productsViewModel: ProductsViewModel){
+fun Header(productsViewModel: ProductsViewModel, appDatabase: AppDatabase){
     val total by productsViewModel.total.observeAsState(initial = 0.0)
 
     val gradient = Brush.linearGradient(
@@ -48,7 +49,7 @@ fun Header(productsViewModel: ProductsViewModel){
             verticalAlignment = Alignment.CenterVertically,
         ){
             Logo()
-            FinishListButton(productsViewModel)
+            FinishListButton(productsViewModel, appDatabase)
         }
         AddItemInput(productsViewModel)
         Resume(total)

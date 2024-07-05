@@ -44,11 +44,12 @@ import com.example.listadecompras.presentation.screens.home.composables.Cart
 import com.example.listadecompras.presentation.screens.home.composables.FinishListButton
 import com.example.listadecompras.presentation.screens.home.composables.Header
 import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
+import com.example.listadecompras.viewmodels.AppDatabase
 
 @Composable
-fun Home(productsViewModel: ProductsViewModel){
+fun Home(productsViewModel: ProductsViewModel, appDatabase: AppDatabase){
     Column {
-        Header(productsViewModel)
+        Header(productsViewModel, appDatabase)
         Cart(productsViewModel)
 
     }

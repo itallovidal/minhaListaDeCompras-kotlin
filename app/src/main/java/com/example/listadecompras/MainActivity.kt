@@ -38,6 +38,7 @@ import com.example.listadecompras.presentation.screens.home.Home
 import com.example.listadecompras.presentation.ui.theme.ListaDeComprasTheme
 import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
 import com.example.listadecompras.presentation.screens.import.ImportListScreen
+import com.example.listadecompras.viewmodels.AppDatabase
 import java.util.logging.Handler
 
 
@@ -52,6 +53,7 @@ class MainActivity : ComponentActivity() {
 
                 val productsViewModel = ProductsViewModel()
                 val historyViewModel = HistoryViewModel()
+                val appDatabase = AppDatabase()
                 val navController = rememberNavController()
                 val colorTwo = ContextCompat.getColor(this@MainActivity, R.color.neutralTwo)
 
@@ -59,7 +61,7 @@ class MainActivity : ComponentActivity() {
                     Column {
                         NavHost(navController = navController, startDestination = "home", Modifier.weight(1f) ){
                             composable("home"){
-                                Home(productsViewModel)
+                                Home(productsViewModel, appDatabase)
                             }
                             composable("importList"){
                                 ImportListScreen(productsViewModel, navController)

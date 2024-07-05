@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    kotlin("plugin.serialization") version embeddedKotlinVersion
+    kotlin("plugin.serialization")
     id("kotlin-kapt")
 }
 
