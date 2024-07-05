@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -91,8 +92,10 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel?, isReadOnly
                     keyboardController?.hide()
             }),
             colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.White
-            )
+                containerColor = if (isReadOnly) Color(0xFF323238) else Color.White
+            ),
+            textStyle = TextStyle(color = if (isReadOnly) Color.White else Color.Black)
+
         )
         TextField(
             value = quantity,
@@ -116,9 +119,10 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel?, isReadOnly
                 keyboardController?.hide()
             }),
             colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.White,
+                containerColor = if (isReadOnly) Color(0xFF323238) else Color.White,
                 textColor = Color.Black
-            )
+            ),
+            textStyle = TextStyle(color = if (isReadOnly) Color.White else Color.Black)
         )
 
         if(!isReadOnly){

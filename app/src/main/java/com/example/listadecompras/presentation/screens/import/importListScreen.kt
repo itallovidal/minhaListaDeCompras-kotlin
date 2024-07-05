@@ -45,7 +45,8 @@ fun ImportListScreen(productsViewModel: ProductsViewModel, navController: NavCon
     Column(modifier = Modifier
         .fillMaxHeight()
         .fillMaxWidth()
-        .background(gradient),
+        .background(gradient)
+        .padding(top = 40.dp),
             horizontalAlignment = Alignment.CenterHorizontally){
 
        Logo()
