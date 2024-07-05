@@ -48,6 +48,7 @@ fun AddItemInput(productsViewModel: ProductsViewModel){
             ,
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = Color.Transparent,
+                textColor = Color.White
             ),
             placeholder = { Text("Digite o produto..") }
         )

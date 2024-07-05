@@ -117,6 +117,7 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel?, isReadOnly
             }),
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = Color.White,
+                textColor = Color.Black
             )
         )
 
