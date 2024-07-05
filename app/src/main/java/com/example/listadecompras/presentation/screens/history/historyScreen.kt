@@ -24,17 +24,27 @@ import com.example.listadecompras.presentation.screens.history.composables.Histo
 import com.example.listadecompras.presentation.screens.home.composables.CartItem
 import com.example.listadecompras.presentation.screens.home.composables.FinishListButton
 import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
+import com.example.listadecompras.viewmodels.AppDatabase
+import kotlinx.coroutines.runBlocking
 
 @Composable
-fun HistoryScreen(historyViewModel: HistoryViewModel, navController: NavController){
+fun HistoryScreen(historyViewModel: HistoryViewModel, navController: NavController, appDatabase: AppDatabase){
 
+    val phoneID by appDatabase.phoneID.observeAsState()
     val gradient = Brush.linearGradient(
         0.0f to Color(0xFF323238),
         500.0f to Color(0xFF121214),
         start = Offset.Zero,
         end = Offset.Infinite,
     )
+
     val historyList by historyViewModel.history.observeAsState(initial = emptyList())
+
+    if(phoneID != null){
+         runBlocking {
+            historyViewModel.getAllHistory(phoneID!!.uid)
+        }
+    }
 
     Column(
         modifier = Modifier

@@ -67,7 +67,7 @@ class MainActivity : ComponentActivity() {
                                 ImportListScreen(productsViewModel, navController)
                             }
                             composable("history"){
-                                HistoryScreen(historyViewModel, navController)
+                                HistoryScreen(historyViewModel, navController, appDatabase )
                             }
                             composable("historyDetails/{listID}"){ backStackEntry ->
                                 HistoryDetailsScreen(historyViewModel, backStackEntry.arguments?.getString("listID")?.toInt())
