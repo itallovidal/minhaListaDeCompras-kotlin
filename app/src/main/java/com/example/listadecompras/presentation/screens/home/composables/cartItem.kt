@@ -90,8 +90,7 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel, modifier: M
                     keyboardController?.hide()
             }),
             colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color.White,
-                textColor = Color.Black
+                containerColor = Color.White
             )
         )
         TextField(
@@ -116,7 +115,6 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel, modifier: M
             }),
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = Color.White,
-                textColor = Color.Black
             )
         )
         Button(

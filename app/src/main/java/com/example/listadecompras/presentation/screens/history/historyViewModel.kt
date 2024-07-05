@@ -37,8 +37,7 @@ class HistoryViewModel: ViewModel(){
     private suspend fun getAllHistory() = coroutineScope{
         launch {
             try{
-                // SUBSTITUIR AQUELE UUID ALI PELO UUID NOVO
-                val response = this@HistoryViewModel.httpClient.get("http://10.0.2.2:3333/list/COLAAQUIÓ").body<HistoryResponse>()
+                val response = this@HistoryViewModel.httpClient.get("http://10.0.2.2:3333/list/db6becf4-7a2e-450c-b6ac-f514af880ac4").body<HistoryResponse>()
                 _history.value = response.history
             }catch (error: Exception){
                 Log.e("log3", error.message.toString())
