@@ -42,7 +42,7 @@ import com.example.listadecompras.presentation.screens.home.viewModels.ProductsV
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CartItem(product: Product, productsViewModel: ProductsViewModel, modifier: Modifier = Modifier){
+fun CartItem(product: Product, productsViewModel: ProductsViewModel?, isReadOnly: Boolean = false){
     val trash = ImageVector.vectorResource(id = R.drawable.trashicon)
     var price by remember { mutableStateOf(TextFieldValue(product.price.toString())) }
     var quantity by remember { mutableStateOf(TextFieldValue(product.quantity.toString())) }
@@ -50,7 +50,7 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel, modifier: M
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Row(
-        modifier
+        Modifier
             .clip(shape = RoundedCornerShape(5.dp))
             .background(Color(0xFF323238))
             .padding(16.dp)
@@ -59,7 +59,7 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel, modifier: M
         verticalAlignment = Alignment.CenterVertically
     ){
         Box(
-            modifier.weight(1f)
+            Modifier.weight(1f)
         ){
             Text(
                 text = product.name,
@@ -71,10 +71,10 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel, modifier: M
             onValueChange = {
                 if (it.text.length <= maxInputLength) {
                     price = it
-                    productsViewModel.changeItemPrice(product.id, it.text)
+                    productsViewModel?.changeItemPrice(product.id, it.text)
                 }
             },
-            modifier
+            Modifier
                 .clip(shape = RoundedCornerShape(5.dp))
                 .weight(1.0f)
                 .onFocusEvent {
@@ -82,6 +82,7 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel, modifier: M
                         price = TextFieldValue("")
                     }
                 },
+            enabled = !isReadOnly,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
                 imeAction = ImeAction.Done
@@ -98,10 +99,10 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel, modifier: M
             onValueChange = {
                 if (it.text.length <= maxInputLength) {
                     quantity = it
-                    productsViewModel.changeItemQuantity(product.id, it.text)
+                    productsViewModel?.changeItemQuantity(product.id, it.text)
                 }
             },
-            modifier
+            Modifier
                 .clip(shape = RoundedCornerShape(5.dp))
                 .weight(1.0f)
                 .onFocusEvent {
@@ -109,6 +110,7 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel, modifier: M
                         quantity = TextFieldValue("")
                     }
                 },
+            enabled = !isReadOnly,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = {
                 keyboardController?.hide()
@@ -117,16 +119,19 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel, modifier: M
                 containerColor = Color.White,
             )
         )
-        Button(
-            onClick = { productsViewModel.removeItemFromCart(product.id) },
-            contentPadding = PaddingValues(0.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-        ) {
-            Icon(
-                imageVector = trash,
-                contentDescription = "drawable icons",
-                tint = Color.Unspecified
-            )
+
+        if(!isReadOnly){
+            Button(
+                onClick = { productsViewModel?.removeItemFromCart(product.id) },
+                contentPadding = PaddingValues(0.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
+            ) {
+                Icon(
+                    imageVector = trash,
+                    contentDescription = "drawable icons",
+                    tint = Color.Unspecified
+                )
+            }
         }
     }
 

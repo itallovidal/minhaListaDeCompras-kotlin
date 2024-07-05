@@ -33,6 +33,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.listadecompras.presentation.screens.history.HistoryScreen
 import com.example.listadecompras.presentation.screens.history.HistoryViewModel
+import com.example.listadecompras.presentation.screens.historyDetails.HistoryDetailsScreen
 import com.example.listadecompras.presentation.screens.home.Home
 import com.example.listadecompras.presentation.ui.theme.ListaDeComprasTheme
 import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
@@ -65,6 +66,9 @@ class MainActivity : ComponentActivity() {
                             }
                             composable("history"){
                                 HistoryScreen(historyViewModel)
+                            }
+                            composable("historyDetails"){
+                                HistoryDetailsScreen()
                             }
                         }
                         BottomAppBar(actions = {
