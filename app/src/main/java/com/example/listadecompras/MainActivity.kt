@@ -65,10 +65,10 @@ class MainActivity : ComponentActivity() {
                                 ImportListScreen(productsViewModel, navController)
                             }
                             composable("history"){
-                                HistoryScreen(historyViewModel)
+                                HistoryScreen(historyViewModel, navController)
                             }
-                            composable("historyDetails"){
-                                HistoryDetailsScreen()
+                            composable("historyDetails/{listID}"){ backStackEntry ->
+                                HistoryDetailsScreen(historyViewModel, backStackEntry.arguments?.getString("listID")?.toInt())
                             }
                         }
                         BottomAppBar(actions = {

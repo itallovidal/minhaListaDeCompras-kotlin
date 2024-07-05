@@ -18,12 +18,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.listadecompras.domain.models.Product
 import com.example.listadecompras.presentation.Logo
+import com.example.listadecompras.presentation.screens.history.HistoryViewModel
 import com.example.listadecompras.presentation.screens.history.composables.HistoryItem
 import com.example.listadecompras.presentation.screens.home.composables.CartItem
 
 @Composable
-fun HistoryDetailsScreen(){
-    var products: List<Product>
+fun HistoryDetailsScreen(historyViewModel: HistoryViewModel, listID: Int?){
+
+    val list = historyViewModel.history.value?.find { list -> list.id == listID }
+
+
+
+
     val gradient = Brush.linearGradient(
         0.0f to Color(0xFF323238),
         500.0f to Color(0xFF121214),
@@ -45,8 +51,10 @@ fun HistoryDetailsScreen(){
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
-            items(products, key = { product -> product.id }) { product ->
-                CartItem(product = product, null, isReadOnly = true )
+            if (list != null) {
+                items(list.product, key = { product -> product.id }) { product ->
+                    CartItem(product = product, null, isReadOnly = true )
+                }
             }
         }
     }

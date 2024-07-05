@@ -18,6 +18,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.listadecompras.presentation.Logo
 import com.example.listadecompras.presentation.screens.history.composables.HistoryItem
 import com.example.listadecompras.presentation.screens.home.composables.CartItem
@@ -25,7 +26,7 @@ import com.example.listadecompras.presentation.screens.home.composables.FinishLi
 import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
 
 @Composable
-fun HistoryScreen(historyViewModel: HistoryViewModel){
+fun HistoryScreen(historyViewModel: HistoryViewModel, navController: NavController){
 
     val gradient = Brush.linearGradient(
         0.0f to Color(0xFF323238),
@@ -50,7 +51,7 @@ fun HistoryScreen(historyViewModel: HistoryViewModel){
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             items(historyList, key = { history -> history.id }) { list ->
-                HistoryItem(list.totalPrice, list.totalQuantity)
+                HistoryItem(list.totalPrice, list.totalQuantity, list.id, navController)
             }
         }
     }

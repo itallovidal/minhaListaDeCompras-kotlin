@@ -37,7 +37,7 @@ class HistoryViewModel: ViewModel(){
     private suspend fun getAllHistory() = coroutineScope{
         launch {
             try{
-                val response = this@HistoryViewModel.httpClient.get("http://10.0.2.2:3333/list/db6becf4-7a2e-450c-b6ac-f514af880ac4").body<HistoryResponse>()
+                val response = this@HistoryViewModel.httpClient.get("http://10.0.2.2:3333/list/26f4587e-4ed4-42f9-9146-90397ecc8fc2").body<HistoryResponse>()
                 _history.value = response.history
             }catch (error: Exception){
                 Log.e("log3", error.message.toString())
