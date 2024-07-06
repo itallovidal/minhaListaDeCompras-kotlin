@@ -1,4 +1,4 @@
-package com.example.listadecompras.presentation
+package com.example.listadecompras.presentation.ui.globalComposables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height

@@ -24,30 +24,30 @@ import androidx.navigation.NavController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
     fun HistoryItem(totalPrice: Double, totalQuantity: Double, listID: Int, navController: NavController){
-            Row(
-                Modifier
-                    .clip(shape = RoundedCornerShape(5.dp))
-                    .background(Color(0xFF323238))
-                    .padding(16.dp)
-                    .fillMaxWidth()
-                    .clickable {
-                        navController.navigate("historyDetails/$listID")
-                    },
-                        horizontalArrangement = Arrangement.spacedBy(10.dp),
-                verticalAlignment = Alignment.CenterVertically)
-            {
-                Column(
-                    Modifier.weight(1f)
-                ){
-                    Text(
-                        text = "Preço: $totalPrice",
-                        color = Color.White,
-                    )
-                    Text(
-                        text = "Quantidade: $totalQuantity",
-                        color = Color.White,
-                    )
-                }
-                Icon(Icons.Filled.KeyboardArrowRight, contentDescription = null, tint = Color.White)
+        Row(
+            Modifier
+                .clip(shape = RoundedCornerShape(5.dp))
+                .background(Color(0xFF323238))
+                .padding(16.dp)
+                .fillMaxWidth()
+                .clickable {
+                    navController.navigate("historyDetails/$listID")
+                },
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalAlignment = Alignment.CenterVertically)
+        {
+            Column(
+                Modifier.weight(1f)
+            ){
+                Text(
+                    text = "Preço: $totalPrice",
+                    color = Color.White,
+                )
+                Text(
+                    text = "Quantidade: $totalQuantity",
+                    color = Color.White,
+                )
             }
+            Icon(Icons.Filled.KeyboardArrowRight, contentDescription = null, tint = Color.White)
+        }
     }

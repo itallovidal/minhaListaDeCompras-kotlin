@@ -9,7 +9,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
+import com.example.listadecompras.viewmodels.ProductsViewModel
+import com.example.listadecompras.presentation.ui.globalComposables.CartItem
 
 @Composable
 fun Cart(productsViewModel: ProductsViewModel, modifier: Modifier = Modifier){

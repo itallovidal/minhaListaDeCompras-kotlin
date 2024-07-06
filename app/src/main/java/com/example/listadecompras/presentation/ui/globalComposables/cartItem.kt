@@ -1,4 +1,4 @@
-package com.example.listadecompras.presentation.screens.home.composables
+package com.example.listadecompras.presentation.ui.globalComposables
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,7 +36,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.listadecompras.R
 import com.example.listadecompras.domain.DTOs.Product
-import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
+import com.example.listadecompras.viewmodels.ProductsViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)

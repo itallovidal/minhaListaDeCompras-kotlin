@@ -14,17 +14,13 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.listadecompras.presentation.Logo
+import com.example.listadecompras.presentation.ui.globalComposables.Logo
 import com.example.listadecompras.presentation.screens.history.HistoryViewModel
-import com.example.listadecompras.presentation.screens.home.composables.CartItem
+import com.example.listadecompras.presentation.ui.globalComposables.CartItem
 
 @Composable
 fun HistoryDetailsScreen(historyViewModel: HistoryViewModel, listID: Int?){
-
     val list = historyViewModel.history.value?.find { list -> list.id == listID }
-
-
-
 
     val gradient = Brush.linearGradient(
         0.0f to Color(0xFF323238),

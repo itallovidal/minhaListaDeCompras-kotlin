@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.listadecompras.domain.DTOs.SavedList
 import com.example.listadecompras.domain.DTOs.HistoryResponse
+import com.example.listadecompras.utilityClass.Ktor
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android
@@ -19,17 +20,8 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import java.util.UUID
 
-class HistoryViewModel: ViewModel(){
-    private val httpClient: HttpClient = HttpClient(Android) {
-        install(Logging) {
-            level = LogLevel.ALL
-        }
-        install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-            })
-        }
-    }
+class HistoryViewModel(ktor: Ktor): ViewModel(){
+    private val ktorClient = ktor.getClient()
 
     private val _history = MutableLiveData<List<SavedList>>()
     val history: LiveData<List<SavedList>> = _history
@@ -37,17 +29,11 @@ class HistoryViewModel: ViewModel(){
     suspend fun getAllHistory(phoneID: UUID) = coroutineScope{
         launch {
             try{
-                val response = this@HistoryViewModel.httpClient.get("http://10.0.2.2:3333/list/${phoneID}").body<HistoryResponse>()
+                val response = ktorClient.get("http://10.0.2.2:3333/list/${phoneID}").body<HistoryResponse>()
                 _history.value = response.history
             }catch (error: Exception){
-                Log.e("log3", error.message.toString())
+                Log.e("myLog", error.message.toString())
             }
         }
     }
-
-//    init {
-//        runBlocking {
-//            this@HistoryViewModel.getAllHistory()
-//        }
-//    }
 }

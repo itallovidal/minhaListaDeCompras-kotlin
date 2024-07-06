@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import com.example.listadecompras.presentation.screens.home.composables.Cart
 import com.example.listadecompras.presentation.screens.home.composables.Header
-import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
+import com.example.listadecompras.viewmodels.ProductsViewModel
 import com.example.listadecompras.viewmodels.AppDatabase
 
 @Composable
