@@ -1,6 +1,5 @@
 package com.example.listadecompras.presentation.screens.home.composables
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,7 +9,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.listadecompras.domain.models.Product
 import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
 
 @Composable

@@ -1,4 +1,4 @@
-package com.example.listadecompras.domain.models
+package com.example.listadecompras.domain.DTOs
 
 import kotlinx.serialization.Serializable
 

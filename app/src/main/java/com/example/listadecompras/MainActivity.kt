@@ -38,6 +38,7 @@ import com.example.listadecompras.presentation.screens.home.Home
 import com.example.listadecompras.presentation.ui.theme.ListaDeComprasTheme
 import com.example.listadecompras.presentation.screens.home.viewModels.ProductsViewModel
 import com.example.listadecompras.presentation.screens.import.ImportListScreen
+import com.example.listadecompras.utilityClass.Ktor
 import com.example.listadecompras.viewmodels.AppDatabase
 import java.util.logging.Handler
 
@@ -51,9 +52,13 @@ class MainActivity : ComponentActivity() {
                     mutableStateOf("home")
                 }
 
-                val productsViewModel = ProductsViewModel()
-                val historyViewModel = HistoryViewModel()
+                val ktor = Ktor()
                 val appDatabase = AppDatabase()
+
+                val productsViewModel = ProductsViewModel(ktor)
+                val historyViewModel = HistoryViewModel()
+
+
                 val navController = rememberNavController()
                 val colorTwo = ContextCompat.getColor(this@MainActivity, R.color.neutralTwo)
 
