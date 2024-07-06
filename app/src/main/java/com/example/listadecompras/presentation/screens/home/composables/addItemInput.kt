@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
@@ -24,7 +26,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.example.listadecompras.R
@@ -34,6 +39,7 @@ import com.example.listadecompras.viewmodels.ProductsViewModel
 @Composable
 fun AddItemInput(productsViewModel: ProductsViewModel){
     var item by remember { mutableStateOf(TextFieldValue("")) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Row(
         Modifier
@@ -53,6 +59,14 @@ fun AddItemInput(productsViewModel: ProductsViewModel){
                 containerColor = Color.Transparent,
                 textColor = Color.White
             ),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(onDone = {
+                productsViewModel.addItemToCart(item.text)
+                item = TextFieldValue("")
+                keyboardController?.hide()
+            }),
             placeholder = { Text("Digite o produto..") }
         )
         Button(

@@ -1,5 +1,7 @@
 package com.example.listadecompras.presentation.ui.globalComposables
+import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
@@ -45,8 +48,10 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel?, isReadOnly
     val trash = ImageVector.vectorResource(id = R.drawable.trashicon)
     var price by remember { mutableStateOf(TextFieldValue(product.price.toString())) }
     var quantity by remember { mutableStateOf(TextFieldValue(product.quantity.toString())) }
-    val maxInputLength = 4
+
+    val maxInputLength = 5
     val keyboardController = LocalSoftwareKeyboardController.current
+
 
     Row(
         Modifier
@@ -68,6 +73,12 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel?, isReadOnly
         TextField(
             value = price,
             onValueChange = {
+                Log.e("meuloguinhos", it.text)
+                if(it.text == ".") {
+                    price = TextFieldValue(".")
+                    return@TextField
+                }
+
                 if (it.text.length <= maxInputLength) {
                     price = it
                     productsViewModel?.changeItemPrice(product.id, it.text)
@@ -77,7 +88,7 @@ fun CartItem(product: Product, productsViewModel: ProductsViewModel?, isReadOnly
                 .clip(shape = RoundedCornerShape(5.dp))
                 .weight(1.0f)
                 .onFocusEvent {
-                    if(it.isFocused && price.text == product.price.toString()){
+                    if (it.hasFocus || it.isFocused) {
                         price = TextFieldValue("")
                     }
                 },

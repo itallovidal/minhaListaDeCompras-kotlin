@@ -2,6 +2,7 @@ package com.example.listadecompras
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material.icons.Icons
@@ -10,7 +11,10 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
@@ -30,6 +34,9 @@ import com.example.listadecompras.presentation.screens.home.Home
 import com.example.listadecompras.presentation.ui.theme.ListaDeComprasTheme
 import com.example.listadecompras.viewmodels.ProductsViewModel
 import com.example.listadecompras.presentation.screens.import.ImportListScreen
+import com.example.listadecompras.presentation.ui.theme.neutralOne
+import com.example.listadecompras.presentation.ui.theme.neutralTwo
+import com.example.listadecompras.presentation.ui.theme.primary
 import com.example.listadecompras.utility.Ktor
 import com.example.listadecompras.viewmodels.AppDatabase
 
@@ -51,9 +58,7 @@ class MainActivity : ComponentActivity() {
 
                 val navController = rememberNavController()
 
-                val colorTwo = ContextCompat.getColor(this@MainActivity, R.color.neutralTwo)
-
-                Surface( color = Color(colorTwo), modifier = Modifier.fillMaxHeight() ) {
+                Surface( color = neutralTwo, modifier = Modifier.fillMaxHeight() ) {
                     Column {
                         NavHost(navController = navController, startDestination = "home", Modifier.weight(1f) ){
                             composable("home"){
@@ -69,10 +74,16 @@ class MainActivity : ComponentActivity() {
                                 HistoryDetailsScreen(historyViewModel, backStackEntry.arguments?.getString("listID")?.toInt())
                             }
                         }
-                        BottomAppBar(actions = {
+                        BottomAppBar(
+                            containerColor = neutralOne,
+                            actions = {
                             NavigationBarItem(
+                                colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent),
                                 label = {
-                                        Text(text="Home")
+                                        Text(
+                                            text="Home" ,
+                                            color = if (selectedScreen == "home") primary else Color.Gray
+                                        )
                                 },
                                 selected = selectedScreen == "home",
                                 onClick = {
@@ -80,11 +91,17 @@ class MainActivity : ComponentActivity() {
                                     selectedScreen = "home"
                                 },
                                 icon = {
-                                    Icon(Icons.Filled.Home, contentDescription = null)
+                                    Icon(
+                                        Icons.Filled.Home,
+                                        contentDescription = null,
+                                        tint = if (selectedScreen == "home") primary else Color.Gray
+                                    )
                                 })
                             NavigationBarItem(
-                                label = {
-                                    Text(text="Importar Lista")
+                                colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent),                                label = {
+                                    Text(text="Importar Lista",
+                                        color = if (selectedScreen == "importList") primary else Color.Gray
+                                    )
                                 },
                                 selected = selectedScreen == "importList",
                                 onClick = {
@@ -92,11 +109,18 @@ class MainActivity : ComponentActivity() {
                                     selectedScreen = "importList"
                                  },
                                 icon = {
-                                    Icon(Icons.Filled.Add, contentDescription = null)
+                                    Icon(
+                                        Icons.Filled.Add,
+                                        contentDescription = null,
+                                        tint = if (selectedScreen == "importList") primary else Color.Gray
+                                    )
                                 })
                             NavigationBarItem(
-                                label = {
-                                    Text(text="Histórico")
+                                colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent),                                label = {
+                                    Text(
+                                        text="Histórico",
+                                        color = if (selectedScreen == "history") primary else Color.Gray
+                                        )
                                 },
                                 selected = selectedScreen == "history",
                                 onClick = {
@@ -104,8 +128,12 @@ class MainActivity : ComponentActivity() {
                                     selectedScreen = "history"
                                 },
                                 icon = {
-                                    Icon(Icons.Filled.List, contentDescription = null)
-                                })
+                                    Icon(
+                                        Icons.Filled.List,
+                                        contentDescription = null,
+                                        tint = if (selectedScreen == "history") primary else Color.Gray
+                                    )
+                            })
                         })
                     }
                 }

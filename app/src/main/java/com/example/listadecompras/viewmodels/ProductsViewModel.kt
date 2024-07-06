@@ -80,22 +80,27 @@ class ProductsViewModel(ktor: Ktor): ViewModel() {
     }
 
     fun changeItemPrice(id: Int, price: String){
+        var newPrice = price
         Log.e("myLog", price)
-
         if(price.isEmpty()) return
 
-        val newPrice = price.toDouble()
+        if(price.contains(",")){
+            newPrice = price.replace(",", ".") + "0"
+        }
+
+        Log.e("myLog", newPrice)
+
 
         val updatedProducts = _products.value!!.map {
             if(it.id == id){
                 Log.e("myLog", "Novo Preço:")
-                Log.e("myLog", newPrice.toString())
-                return@map it.copy(price = newPrice)
+                return@map it.copy(price = newPrice.toDouble())
             }
             return@map it
         }
 
         _products.value = updatedProducts
+        Log.e("myLog", _products.value.toString())
         _total.value = getTotalValue()
     }
 
