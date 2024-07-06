@@ -18,19 +18,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.listadecompras.presentation.ui.globalComposables.Logo
 import com.example.listadecompras.presentation.screens.history.composables.HistoryItem
+import com.example.listadecompras.presentation.ui.theme.neutralOne
+import com.example.listadecompras.presentation.ui.theme.neutralThree
+import com.example.listadecompras.utility.getGradient
 import com.example.listadecompras.viewmodels.AppDatabase
 import kotlinx.coroutines.runBlocking
 
 @Composable
 fun HistoryScreen(historyViewModel: HistoryViewModel, navController: NavController, appDatabase: AppDatabase){
     val phoneID by appDatabase.phoneID.observeAsState()
-    val gradient = Brush.linearGradient(
-        0.0f to Color(0xFF323238),
-        500.0f to Color(0xFF121214),
-        start = Offset.Zero,
-        end = Offset.Infinite,
-    )
-
     val historyList by historyViewModel.history.observeAsState(initial = emptyList())
 
     if(phoneID != null){
@@ -41,7 +37,7 @@ fun HistoryScreen(historyViewModel: HistoryViewModel, navController: NavControll
 
     Column(
         modifier = Modifier
-            .background(gradient)
+            .background(getGradient(neutralOne, neutralThree))
             .padding(32.dp)
             .fillMaxWidth(),
         verticalArrangement = Arrangement.Center,

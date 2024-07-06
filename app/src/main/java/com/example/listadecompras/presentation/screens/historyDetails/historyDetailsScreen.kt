@@ -17,21 +17,17 @@ import androidx.compose.ui.unit.dp
 import com.example.listadecompras.presentation.ui.globalComposables.Logo
 import com.example.listadecompras.presentation.screens.history.HistoryViewModel
 import com.example.listadecompras.presentation.ui.globalComposables.CartItem
+import com.example.listadecompras.presentation.ui.theme.neutralOne
+import com.example.listadecompras.presentation.ui.theme.neutralThree
+import com.example.listadecompras.utility.getGradient
 
 @Composable
 fun HistoryDetailsScreen(historyViewModel: HistoryViewModel, listID: Int?){
     val list = historyViewModel.history.value?.find { list -> list.id == listID }
 
-    val gradient = Brush.linearGradient(
-        0.0f to Color(0xFF323238),
-        500.0f to Color(0xFF121214),
-        start = Offset.Zero,
-        end = Offset.Infinite,
-    )
-
     Column(
         modifier = Modifier
-            .background(gradient)
+            .background(getGradient(neutralOne, neutralThree))
             .padding(32.dp)
             .fillMaxWidth(),
         verticalArrangement = Arrangement.Center,

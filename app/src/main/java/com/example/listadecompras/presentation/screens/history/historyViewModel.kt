@@ -6,18 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.listadecompras.domain.DTOs.SavedList
 import com.example.listadecompras.domain.DTOs.HistoryResponse
-import com.example.listadecompras.utilityClass.Ktor
-import io.ktor.client.HttpClient
+import com.example.listadecompras.utility.Ktor
 import io.ktor.client.call.body
-import io.ktor.client.engine.android.Android
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
-import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.Json
 import java.util.UUID
 
 class HistoryViewModel(ktor: Ktor): ViewModel(){

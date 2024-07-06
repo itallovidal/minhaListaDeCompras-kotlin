@@ -4,6 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,12 +34,11 @@ import com.example.listadecompras.viewmodels.ProductsViewModel
 @Composable
 fun AddItemInput(productsViewModel: ProductsViewModel){
     var item by remember { mutableStateOf(TextFieldValue("")) }
-    val plus = ImageVector.vectorResource(id = R.drawable.plus)
 
     Row(
         Modifier
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ){
         TextField(
@@ -66,7 +69,8 @@ fun AddItemInput(productsViewModel: ProductsViewModel){
 
         ) {
             Icon(
-                imageVector = plus,
+                imageVector = Icons.Default.Add,
+                modifier = Modifier.size(50.dp),
                 contentDescription = "drawable icons",
                 tint = Color(0xFF379DF1)
             )

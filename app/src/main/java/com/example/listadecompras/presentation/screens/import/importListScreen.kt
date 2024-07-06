@@ -26,19 +26,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.listadecompras.presentation.ui.globalComposables.Logo
+import com.example.listadecompras.presentation.ui.theme.neutralOne
+import com.example.listadecompras.presentation.ui.theme.neutralThree
+import com.example.listadecompras.utility.getGradient
 import com.example.listadecompras.viewmodels.ProductsViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ImportListScreen(productsViewModel: ProductsViewModel, navController: NavController){
-    val gradient = Brush.linearGradient(
-        0.0f to Color(0xFF323238),
-        500.0f to Color(0xFF121214),
-        start = Offset.Zero,
-        end = Offset.Infinite,
-    )
-
     var listToImport by remember {
         mutableStateOf("")
     }
@@ -46,7 +42,7 @@ fun ImportListScreen(productsViewModel: ProductsViewModel, navController: NavCon
     Column(modifier = Modifier
         .fillMaxHeight()
         .fillMaxWidth()
-        .background(gradient)
+        .background(getGradient(neutralOne, neutralThree))
         .padding(top = 40.dp),
             horizontalAlignment = Alignment.CenterHorizontally){
 

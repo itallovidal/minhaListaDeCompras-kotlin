@@ -30,7 +30,7 @@ import com.example.listadecompras.presentation.screens.home.Home
 import com.example.listadecompras.presentation.ui.theme.ListaDeComprasTheme
 import com.example.listadecompras.viewmodels.ProductsViewModel
 import com.example.listadecompras.presentation.screens.import.ImportListScreen
-import com.example.listadecompras.utilityClass.Ktor
+import com.example.listadecompras.utility.Ktor
 import com.example.listadecompras.viewmodels.AppDatabase
 
 
@@ -49,8 +49,8 @@ class MainActivity : ComponentActivity() {
                 val productsViewModel = ProductsViewModel(ktor)
                 val historyViewModel = HistoryViewModel(ktor)
 
-
                 val navController = rememberNavController()
+
                 val colorTwo = ContextCompat.getColor(this@MainActivity, R.color.neutralTwo)
 
                 Surface( color = Color(colorTwo), modifier = Modifier.fillMaxHeight() ) {

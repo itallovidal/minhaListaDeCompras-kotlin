@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.listadecompras.domain.DTOs.Product
 import android.util.Log
 import com.example.listadecompras.domain.DTOs.ProductList
-import com.example.listadecompras.utilityClass.Ktor
+import com.example.listadecompras.utility.Ktor
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText

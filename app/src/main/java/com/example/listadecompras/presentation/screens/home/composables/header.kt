@@ -15,6 +15,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.listadecompras.presentation.ui.globalComposables.Logo
+import com.example.listadecompras.presentation.ui.theme.neutralOne
+import com.example.listadecompras.presentation.ui.theme.neutralThree
+import com.example.listadecompras.utility.getGradient
 import com.example.listadecompras.viewmodels.ProductsViewModel
 import com.example.listadecompras.viewmodels.AppDatabase
 
@@ -22,17 +25,9 @@ import com.example.listadecompras.viewmodels.AppDatabase
 fun Header(productsViewModel: ProductsViewModel, appDatabase: AppDatabase){
     val total by productsViewModel.total.observeAsState(initial = 0.0)
 
-    val gradient = Brush.linearGradient(
-        0.0f to Color(0xFF323238),
-        500.0f to Color(0xFF121214),
-        start = Offset.Zero,
-        end = Offset.Infinite,
-    )
-
-
     Column(
         modifier = Modifier
-            .background(gradient)
+            .background(getGradient(neutralOne, neutralThree))
             .padding(32.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,

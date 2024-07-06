@@ -1,4 +1,4 @@
-package com.example.listadecompras.utilityClass
+package com.example.listadecompras.utility
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
